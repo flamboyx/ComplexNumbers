@@ -1,43 +1,45 @@
+#pragma once
+
+#include <concepts>
+#include <iostream>
+
 template<typename T>
+concept is_numeric = std::is_arithmetic<T>::value && !std::same_as<T, bool> && !std::same_as<T, char> \
+    && !std::same_as<T, void>;
+
+template<is_numeric T>
 class ComplexNum {
 
 private:
     T re, im;
-    const double epsilon = 1e-9;
 
 public:
     ComplexNum();
-    ComplexNum(int a, int b);
-    ComplexNum(float a, float b);
-    ComplexNum(double a, double b);
-    ComplexNum(long double a, long double b);
-    ComplexNum(int a);
-    ComplexNum(float a);
-    ComplexNum(double a);
-    ComplexNum(long double a);
+    ComplexNum(T a, T b);
     T GetReal();
     T GetImaginary();
-    void SetReal();
-    void SetImaginary();
-    ComplexNum operator + (ComplexNum other);
-    ComplexNum operator - (ComplexNum other);
-    ComplexNum operator * (ComplexNum other);
-    ComplexNum operator / (ComplexNum other);
-    ComplexNum operator ^ (T degree);
-    ComplexNum operator += (ComplexNum other);
-    ComplexNum operator -= (ComplexNum other);
-    ComplexNum operator *= (ComplexNum other);
-    ComplexNum operator /= (ComplexNum other);
-    ComplexNum operator ^= (T degree);
-    bool operator == (ComplexNum other);
-    bool operator == (int other);
-    bool operator == (float other);
-    bool operator == (double other);
-    bool operator == (long double other);
-    bool operator != (ComplexNum other);
-    bool operator != (int other);
-    bool operator != (float other);
-    bool operator != (double other);
-    bool operator != (long double other);
-    
+    void SetReal(T value);
+    void SetImaginary(T value);
+    ComplexNum<T> operator + (const ComplexNum<T> &other) const;
+    ComplexNum<T> operator - (const ComplexNum<T> &other) const;
+    ComplexNum<T> operator * (const ComplexNum<T> &other) const;
+    ComplexNum<T> operator / (const ComplexNum<T> &other) const;
+    ComplexNum<T> operator ^ (int degree) const;
+    ComplexNum<T> operator += (const ComplexNum<T> &other);
+    ComplexNum<T> operator -= (const ComplexNum<T> &other);
+    ComplexNum<T> operator *= (const ComplexNum<T> &other);
+    ComplexNum<T> operator /= (const ComplexNum<T> &other);
+    ComplexNum<T> operator ^= (int degree);
+    ComplexNum<T> Pow(int degree) const;
+    long double Abs() const;
+    bool operator == (const ComplexNum<T> &other) const;
+    bool operator == (T other) const;
+    bool operator != (const ComplexNum<T> &other) const;
+    bool operator != (T other) const;
+    void Print() const;
+
+    template<is_numeric K>
+    friend std::ostream& operator << (std::ostream &out, const ComplexNum<K> &num);
 };
+
+
