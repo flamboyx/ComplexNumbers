@@ -274,12 +274,3 @@ std::ostream& operator<<(std::ostream &out, const ComplexNum<T> &num) {
     }
     return out;
 }
-
-int main() {
-    ComplexNum c1(6, 0);
-    ComplexNum c2(5.4, 4.1);
-    long int a = 5;
-    std::cout << c2;
-
-    return 0;
-}
