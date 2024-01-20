@@ -23,12 +23,12 @@ public:
     ComplexNum<T> operator + (const ComplexNum<T> &other) const;
     ComplexNum<T> operator - (const ComplexNum<T> &other) const;
     ComplexNum<T> operator * (const ComplexNum<T> &other) const;
-    template<is_numeric K> ComplexNum<K> operator / (const ComplexNum<T> &other) const;
+    ComplexNum<T> operator / (const ComplexNum<T> &other) const;
     ComplexNum<T> operator ^ (int degree) const;
     ComplexNum<T>& operator += (const ComplexNum<T> &other);
     ComplexNum<T>& operator -= (const ComplexNum<T> &other);
     ComplexNum<T>& operator *= (const ComplexNum<T> &other);
-    template<is_numeric K> ComplexNum<K>& operator /= (const ComplexNum<T> &other);
+    ComplexNum<T>& operator /= (const ComplexNum<T> &other);
     ComplexNum<T>& operator ^= (int degree);
     ComplexNum<T> Pow(int degree) const;
     long double Abs() const;

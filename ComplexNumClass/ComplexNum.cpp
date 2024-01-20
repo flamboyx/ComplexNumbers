@@ -58,15 +58,14 @@ ComplexNum<T> ComplexNum<T>::operator*(const ComplexNum<T> &other) const {
 }
 
 template<is_numeric T>
-template<is_numeric K>
-ComplexNum<K> ComplexNum<T>::operator/(const ComplexNum<T> &other) const {
+ComplexNum<T> ComplexNum<T>::operator/(const ComplexNum<T> &other) const {
     if (std::abs(other.re) < Epsilon && std::abs(other.im) < Epsilon)
         throw std::runtime_error("Division by zero");
 
-    auto new_re = static_cast<long double>(this->re * other.re + this->im * other.im) / (other.re * other.re + other.im * other.im);
-    auto new_im = static_cast<long double>(this->im * other.re - this->re * other.im) / (other.re * other.re + other.im * other.im);
+    auto new_re = (this->re * other.re + this->im * other.im) / (other.re * other.re + other.im * other.im);
+    auto new_im = (this->im * other.re - this->re * other.im) / (other.re * other.re + other.im * other.im);
 
-    return ComplexNum<K>(new_re, new_im);
+    return ComplexNum<T>(new_re, new_im);
 }
 
 template<is_numeric T>
@@ -95,27 +94,42 @@ ComplexNum<T> &ComplexNum<T>::operator-=(const ComplexNum<T> &other) {
 
 template<is_numeric T>
 ComplexNum<T> &ComplexNum<T>::operator*=(const ComplexNum<T> &other) {
-    this->re = (this->re * other.re - this->im * other.im);
-    this->im = (this->re * other.im + this->im * other.re);
+    auto new_re = (this->re * other.re - this->im * other.im);
+    auto new_im = (this->re * other.im + this->im * other.re);
+
+    this->re = new_re;
+    this->im = new_im;
 
     return *this;
 }
 
 template<is_numeric T>
-template<is_numeric K>
-ComplexNum<K> &ComplexNum<T>::operator/=(const ComplexNum<T> &other) {
+ComplexNum<T> &ComplexNum<T>::operator/=(const ComplexNum<T> &other) {
     if (std::abs(other.re) < Epsilon && std::abs(other.im) < Epsilon)
         throw std::runtime_error("Division by zero");
 
-    auto new_re = static_cast<double>((this->re * other.re + this->im * other.im)) / (long double) (other.re ^ 2 + other.im ^ 2);
-    auto new_im = static_cast<double>((this->im * other.re - this->re * other.im)) / (long double) (other.re ^ 2 + other.im ^ 2);
+    auto new_re = (this->re * other.re + this->im * other.im) / (other.re * other.re + other.im * other.im);
+    auto new_im = (this->im * other.re - this->re * other.im) / (other.re * other.re + other.im * other.im);
+
+    this->re = new_re;
+    this->im = new_im;
+
+    return *this;
+}
+
+template<is_numeric T>
+ComplexNum<T> &ComplexNum<T>::operator^=(int degree) {
+    auto r = std::pow(this->Abs(), degree);
+    auto phi = std::atan2(im, re);
+    this->re = r * std::cos(degree * phi);
+    this->im = r * std::sin(degree * phi);
 
     return *this;
 }
 
 template<is_numeric T>
 long double ComplexNum<T>::Abs() const {
-    return std::sqrt(re * 2 + im ^ 2);
+    return std::sqrt(re * 2 + im * im);
 }
 
 
@@ -146,10 +160,10 @@ std::ostream& operator<<(std::ostream &out, const ComplexNum<T> &num) {
 }
 
 int main() {
-    ComplexNum c1(5, 5);
-    ComplexNum c2(1, 1);
-    ComplexNum c3 = c1 / c2;
-    std::cout << c3;
+    ComplexNum c1(4.0, 5.0);
+    ComplexNum c2(1.0, 1.0);
+    c1 ^= 2;
+    std::cout << c1;
 
     return 0;
 }
