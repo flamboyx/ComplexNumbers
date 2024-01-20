@@ -1,6 +1,7 @@
 #pragma once
 
 #include <concepts>
+#include <string>
 #include <iostream>
 
 template<typename T>
@@ -33,12 +34,19 @@ public:
     ComplexNum<T> Pow(int degree) const;
     long double Abs() const;
     bool operator == (const ComplexNum<T> &other) const;
-    bool operator == (T other) const;
+    bool operator == (int other) const;
+    bool operator == (long int other) const;
+    bool operator == (float other) const;
+    bool operator == (double other) const;
+    bool operator == (long double other) const;
     bool operator != (const ComplexNum<T> &other) const;
-    bool operator != (T other) const;
+    bool operator != (int other) const;
+    bool operator != (long int other) const;
+    bool operator != (float other) const;
+    bool operator != (double other) const;
+    bool operator != (long double other) const;
     void Print() const;
 
     template<is_numeric K>
     friend std::ostream& operator << (std::ostream &out, const ComplexNum<K> &num);
 };
-
