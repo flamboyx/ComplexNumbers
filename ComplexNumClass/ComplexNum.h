@@ -1,9 +1,9 @@
 #pragma once
 
 #include <concepts>
-#include <string>
 #include <cmath>
 #include <iostream>
+#include <string>
 
 #define Epsilon 1e-9
 
