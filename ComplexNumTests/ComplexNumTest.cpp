@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include "ComplexNum.h"
-#include "ComplexNum.cpp"
 
 TEST(ComplexNumTestSuite, DefaultConstructor) {
     ComplexNum<int> num;
